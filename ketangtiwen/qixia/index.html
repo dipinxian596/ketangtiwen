@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>道法与法治课堂抽题</title>
+    <style>
+        body {
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            background-color: #fff5f7;
+            background-image: url('https://img.freepik.com/free-vector/cute-pastel-pattern-background-doodle-style_53876-116277.jpg');
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #5a3d5c;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            border: 3px solid #ffb6c1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #ffb6c1, #ff8fab, #ffb6c1);
+            z-index: -1;
+            border-radius: 25px;
+            opacity: 0.3;
+        }
+
+        h1 {
+            color: #ff6b8b;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #ff6b8b, transparent);
+            border-radius: 3px;
+        }
+
+        .question-display {
+            height: 300px;
+            border: 2px dashed #ffb6c1;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-display::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://img.freepik.com/free-vector/hand-drawn-school-background_23-2149464866.jpg');
+            background-size: cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .question-text {
+            font-size: 2rem;
+            text-align: center;
+            z-index: 1;
+            transition: all 0.1s ease;
+            color: #5a3d5c;
+            font-weight: bold;
+        }
+
+        .selected {
+            color: #1e90ff;
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px rgba(30, 144, 255, 0.3);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .speed-control {
+            width: 80%;
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .speed-label {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #ff6b8b;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 15px;
+            -webkit-appearance: none;
+            background: linear-gradient(to right, #ffb6c1, #ff6b8b);
+            border-radius: 10px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #ff6b8b;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn {
+            background: linear-gradient(to bottom, #ff6b8b, #ff477e);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 5px 15px rgba(255, 107, 139, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 139, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 10px rgba(255, 107, 139, 0.4);
+        }
+
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(30deg);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        .decoration {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .decoration-1 {
+            top: 10px;
+            left: 10px;
+        }
+
+        .decoration-2 {
+            bottom: 10px;
+            right: 10px;
+        }
+
+        .decoration-3 {
+            top: 50%;
+            left: 20px;
+        }
+
+        .decoration-4 {
+            bottom: 30%;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="decoration decoration-1">✿</div>
+        <div class="decoration decoration-2">❀</div>
+        <div class="decoration decoration-3">🌸</div>
+        <div class="decoration decoration-4">🌼</div>
+        
+        <h1>道法与法治课堂抽题</h1>
+        
+        <div class="question-display">
+            <div class="question-text" id="question">点击下方按钮开始抽题</div>
+        </div>
+        
+        <div class="controls">
+            <div class="speed-control">
+                <div class="speed-label">滚动速度</div>
+                <input type="range" id="speedControl" min="100" max="300" value="200">
+            </div>
+            
+            <button class="btn" id="startBtn">开始抽题</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            "1-调适青春期心理矛盾方法P5",
+            "1-树立正确性观念P9",
+            "2-学会管理情绪 P15-P19",
+            "2-了解情感与情绪P19-P21",
+            "3-自尊的表现P27",
+            "3-正确认识人格尊严P29",
+            "4-正确认识自信P33-P36",
+            "4-收获自信的方法P38",
+            "5-自强的重要性P42-P43",
+            "5-做自强不息的中国人的方法P45",
+            "6-正确理解核心思想理念的内涵P54-56",
+            "7-正确理解中华人文精神P58-61",
+            "8-正确理解孝悌忠信、礼义廉耻的荣辱观念P66",
+            "8-感悟天下兴亡、匹夫有责的担当意识P68",
+            "8-大力弘扬和践行自强不息的传统美德P69",
+            "9-正确认识法律体系P76-79",
+            "9-正确理解公共利益的内涵P113",
+            "10-民法典调整平等主体之间的人身与财产关系P84",
+            "10-正确理解人身权P86-88",
+            "10-全面了解财产权P89-91",
+            "11-正确理解一般违法行为及法律责任 P95",
+            "11-明确犯罪的基本特征P97"
+        ];
+
+        const questionElement = document.getElementById('question');
+        const startBtn = document.getElementById('startBtn');
+        const speedControl = document.getElementById('speedControl');
+
+        let isRolling = false;
+        let rollInterval;
+        let currentSpeed = 200;
+
+        function getRandomQuestion() {
+            const randomIndex = Math.floor(Math.random() * questions.length);
+            return questions[randomIndex];
+        }
+
+        function startRolling() {
+            if (isRolling) return;
+            
+            isRolling = true;
+            startBtn.textContent = '停止抽题';
+            questionElement.classList.remove('selected');
+            
+            // 更快的初始速度
+            const initialDelay = Math.max(50, 200 - currentSpeed);
+            
+            rollInterval = setInterval(() => {
+                questionElement.textContent = getRandomQuestion();
+            }, initialDelay);
+        }
+
+        function stopRolling() {
+            if (!isRolling) return;
+            
+            clearInterval(rollInterval);
+            isRolling = false;
+            startBtn.textContent = '开始抽题';
+            questionElement.classList.add('selected');
+        }
+
+        startBtn.addEventListener('click', () => {
+            if (isRolling) {
+                stopRolling();
+            } else {
+                startRolling();
+            }
+        });
+
+        speedControl.addEventListener('input', (e) => {
+            currentSpeed = parseInt(e.target.value);
+            if (isRolling) {
+                clearInterval(rollInterval);
+                const newDelay = Math.max(30, 200 - currentSpeed); // 更快的速度计算
+                rollInterval = setInterval(() => {
+                    questionElement.textContent = getRandomQuestion();
+                }, newDelay);
+            }
+        });
+    </script>
+</body>
+</html>
